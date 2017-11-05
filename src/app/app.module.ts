@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import {AppRoutingModule} from './routing.module';
 import {MainModule} from './main/main.module';
@@ -12,8 +14,10 @@ import { MainComponent } from './main/main.component';
 @NgModule({
     imports: [
         BrowserModule,
+        FormsModule,
+        HttpClientModule,
         AppRoutingModule,
-        MainModule
+        MainModule,
     ],
 
   declarations: [
