@@ -2,15 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import {AppRoutingModule} from './routing.module';
+import {MainModule} from './main/main.module';
 
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
 import { HeaderComponent } from './header/header.component';
+import { MainComponent } from './main/main.component';
+
 
 @NgModule({
     imports: [
         BrowserModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MainModule
     ],
 
   declarations: [
