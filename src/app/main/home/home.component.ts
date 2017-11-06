@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
     web3: any;
     cryptoList: any;
     ethStats: any;
+    gethBlock: any;
+    successData: any;
 
     constructor(private http: HttpClient){
 
@@ -23,16 +25,22 @@ export class HomeComponent implements OnInit {
         //     console.log(this.ethStats);
         // });
 
+        
         this.http.get('https://api.coinmarketcap.com/v1/ticker/?convert=AUD').subscribe(data => {
         this.cryptoList = data;
          });
         
         this.web3 = getweb3();
-        console.log(this.web3.eth.getBlock(100000))
+        this.web3.eth.getBlock(0).then((successData) => {
+              this.gethBlock = successData;
+              console.log(this.gethBlock);
+        }
+
+
         
         
-        var bknum = this.web3.eth.getBlockNumber;
-        console.log(bknum) //this shows a function, not the number(?)
+       // var bknum = this.web3.eth.getBlockNumber;
+        //console.log(bknum) //this shows a function, not the number(?)
         
         
         
