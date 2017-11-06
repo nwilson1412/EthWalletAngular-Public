@@ -12,7 +12,11 @@ export class HomeComponent implements OnInit {
     web3: any;
     cryptoList: any;
     ethStats: any;
-    gethBlock: any;
+    //gethBlock: any;
+    gethBlock = {
+        difficulty: '',
+        gasLimit: '', 
+        };
     successData: any;
 
     constructor(private http: HttpClient){
@@ -35,6 +39,8 @@ export class HomeComponent implements OnInit {
               this.gethBlock = successData;
               console.log(this.gethBlock);
         }
+
+        return this.gethBlock;
 
 
         
