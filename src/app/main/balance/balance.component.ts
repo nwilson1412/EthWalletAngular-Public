@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import getweb3 from '../../components/web3';
+import Web3 from 'web3'
 
 
 @Component({
@@ -24,8 +25,11 @@ export class BalanceComponent {
 
     ngOnInit():void {
 
-    this.web3 = getweb3();
+    //this.web3 = getweb3();
+    this.web3 = new Web3(new Web3.providers.HttpProvider("http://58.7.40.25:8546"))
     //this.web3 = new web3p.providers.HttpProvider("http://58.7.40.25:8546");
+
+   // this.web3.eth.gethBlock
 
     this.web3.eth.getBlockNumber().then((successBlockNumber) => {
         this.currentBlock = successBlockNumber;
