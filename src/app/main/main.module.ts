@@ -8,15 +8,16 @@ import { BalanceComponent } from './balance/balance.component';
 import { WalletComponent } from './wallet/wallet.component';
 
 
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs";
 
 
-import web3 from '../components/web3';
+import web3q from '../components/web3';
 
-console.log(web3().getBlockNumber);
-console.log();
+var web3 = web3q();
+console.log(web3.getBlockNumber);
+console.log();*/
 
 //import Web3 from 'web3';
 

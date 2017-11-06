@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import getweb3 from '../../components/web3';
 
 @Component({
     selector: 'home-view',
@@ -8,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
     
+    web3: any;
     cryptoList: any;
     ethStats: any;
 
@@ -22,8 +24,18 @@ export class HomeComponent implements OnInit {
         // });
 
         this.http.get('https://api.coinmarketcap.com/v1/ticker/?convert=AUD').subscribe(data => {
-            this.cryptoList = data;
-        });
+        this.cryptoList = data;
+         });
+        
+        this.web3 = getweb3();
+        console.log(this.web3.eth.getBlock(100000))
+        
+        
+        var bknum = this.web3.eth.getBlockNumber;
+        console.log(bknum) //this shows a function, not the number(?)
+        
+        
+        
     }
 
 }
