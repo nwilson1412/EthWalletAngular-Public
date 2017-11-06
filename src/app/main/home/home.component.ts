@@ -13,11 +13,15 @@ export class HomeComponent implements OnInit {
     cryptoList: any;
     ethStats: any;
     //gethBlock: any;
+    successData: any;
     gethBlock = {
         difficulty: '',
         gasLimit: '', 
         };
-    successData: any;
+    
+
+    successData2: number;
+    currentBlock: number;
 
     constructor(private http: HttpClient){
 
@@ -35,12 +39,21 @@ export class HomeComponent implements OnInit {
          });
         
         this.web3 = getweb3();
-        this.web3.eth.getBlock(0).then((successData) => {
+
+        this.web3.eth.getBlockNumber().then((successData2) => {
+            this.currentBlock = successData2
+           // this.currentBlock = this.currentBlock.toNumber;
+            console.log(this.currentBlock);
+            //console.log("awfargag")
+        })
+//this is broke.. this.currentBlock isnt being ran in the "getBlock" method
+        //number x = this.currentBlock;
+        this.web3.eth.getBlock(this.currentBlock).then((successData) => {
               this.gethBlock = successData;
               console.log(this.gethBlock);
-        }
+        })
 
-        return this.gethBlock;
+        // /return this.gethBlock;
 
 
         

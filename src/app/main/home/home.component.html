@@ -40,7 +40,9 @@
 
         </div>
     -->
-    <h1>Current Difficulty! {{gethBlock.difficulty}}</h1>
+    <h1>Current Block! {{this.currentBlock}}</h1>
+   <!-- <h1>Current Difficulty! {{gethBlock.difficulty}}</h1> -->
+    
 
         <div *ngIf="cryptoList">
             <div class="card col-sm-3" *ngFor="let coin of cryptoList">
