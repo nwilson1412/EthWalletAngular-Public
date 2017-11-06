@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import getweb3 from '../../components/web3';
+import web3p from 'web3';
+
+
+
+//var Web3EthAccounts = require('web3-eth-accounts');
+//import Web3EthAccounts from '../../components/web3'
 
 @Component({
     selector: 'home-view',
@@ -8,12 +14,14 @@ import getweb3 from '../../components/web3';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    
+    x: number;
     web3: any;
+    //web3a: any;
     cryptoList: any;
     ethStats: any;
     //gethBlock: any;
     successData: any;
+    accountx: any;
     gethBlock = {
         difficulty: '',
         gasLimit: '', 
@@ -22,6 +30,7 @@ export class HomeComponent implements OnInit {
 
     successData2: number;
     currentBlock: number;
+    aa: any;
 
     constructor(private http: HttpClient){
 
@@ -38,20 +47,29 @@ export class HomeComponent implements OnInit {
         this.cryptoList = data;
          });
         
-        this.web3 = getweb3();
+        
+        
+         this.web3 = getweb3();
+         //this.web3 = new web3p.providers.HttpProvider("http://58.7.40.25:8546");
+
 
         this.web3.eth.getBlockNumber().then((successData2) => {
-            this.currentBlock = successData2
-           // this.currentBlock = this.currentBlock.toNumber;
-            console.log(this.currentBlock);
-            //console.log("awfargag")
-        })
-//this is broke.. this.currentBlock isnt being ran in the "getBlock" method
-        //number x = this.currentBlock;
-        this.web3.eth.getBlock(this.currentBlock).then((successData) => {
+            this.currentBlock = successData2;
+         //   console.log(this.currentBlock);
+        });
+
+        this.web3.eth.getBlock(0).then((successData) => {
               this.gethBlock = successData;
               console.log(this.gethBlock);
-        })
+              console.log(this.currentBlock);
+        });
+
+        /*
+        this.web3.eth.personal.getAccounts.then((successData) => {
+            this.gethBlock = successData;
+            console.log(this.gethBlock);
+            console.log(this.currentBlock);
+      })*/
 
         // /return this.gethBlock;
 
