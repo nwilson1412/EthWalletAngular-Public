@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import getweb3 from '../../components/web3';
-import Web3 from 'web3'
+import Web3 from 'web3';
 
 
 
