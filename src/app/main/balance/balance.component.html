@@ -1,8 +1,19 @@
 <div *ngIf="gethBlock">
-<h1>Your Eth Balance</h1>
+
+<h1>Check your Eth balance</h1>
+<div>
+    <input type="text"  #userInput>
+    <button type="submit" (click)='gethAccountInput(userInput.value)'>Add</button>
+</div>
+
+
 <h2>Current Block Height; {{this.currentBlock}}</h2>
 <h2>Current Block Difficulty; {{gethBlock.difficulty}}</h2>
 
 <h2>Your Account; {{this.coinbase}}</h2>
 <h2>Your Account Balance; {{this.coinBal}}</h2>
+
+
+
+<button (click)="onClickMe()">Click me!</button>
 </div>

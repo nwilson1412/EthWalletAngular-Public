@@ -3,11 +3,16 @@ import getweb3 from '../../components/web3';
 import Web3 from 'web3'
 
 
+
 @Component({
     selector: 'balance-view',
     templateUrl: './balance.component.html',
     styleUrls: ['./balance.component.css']
-})
+ 
+})  
+
+
+
 export class BalanceComponent implements OnInit {
     web3: any;
     successData: any;
@@ -18,16 +23,32 @@ export class BalanceComponent implements OnInit {
     coinbase: any;
     coinBal: any;
     gethBlock: any;
+    userIn: any;
 
 
     constructor(){
 
+
     }
+    
+
+
+
+    gethAccountInput(UIn:string) {
+          this.userIn = UIn;
+        
+    }
+    onClickMe(){
+        this.gethAccountInput(this.userIn);
+        alert("this is a test" + " hello " +this.userIn);
+    }
+        
 
     ngOnInit():void {
 
     this.web3 = getweb3();
-    //this.webProvider = new Web3.providers.HttpProvider("http://58.7.40.25:8546");
+
+    //this.web3 = new Web3(new Web3.providers.HttpProvider("http://58.7.40.25:8546"));
     //this.web3 = new Web3(this.webProvider)
     //this.web3 = new web3.providers.HttpProvider("rcd");
    //
