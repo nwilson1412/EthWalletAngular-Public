@@ -12,7 +12,8 @@ var get_web3 = function(){
   } else {
     console.warn("No web3 detected. Falling back to . You should remove this fallback when you deploy live, as it's inherently insecure.");
     // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-    web3 = new Web3(new Web3.providers.HttpProvider("http://58.7.40.25:8546"));
+    //web3 = new Web3(new Web3.providers.HttpProvider("http://58.7.40.25:8546"));
+    web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/cyNgApVB0JFY4LaZomim"));
   }
 
   return web3;

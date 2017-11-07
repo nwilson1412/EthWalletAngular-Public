@@ -42,9 +42,10 @@ export class BalanceComponent implements OnInit {
 
     /* Component calls (from the HTML view) */
     loadAddressData(userAddress){
-        this.userAddress = userAddress;
+        
         this.getBalance(userAddress).then((response) => {
             this.userBalance = response / 1000000000000000000;
+            this.userAddress = userAddress;
             // this.getTransactions(userAddress).then((response) => {
             //     this.userTransactions = response;
             // });
@@ -52,6 +53,7 @@ export class BalanceComponent implements OnInit {
     }
 
     /* Web 3 calls */
+    //used to ensure web3 is connecting to web3 provider
     getStatus(){
         return this.web3.eth.net.isListening();
     }
