@@ -23,7 +23,7 @@
         <div class="form">
             <div class="form-group">
                 <label>
-                    Address
+                    Address (my address for testing - 0x8d59886c26989ba07ab4e5bbe7e536a35483d1af)
                 </label>
                 <p>{{userAddress}}</p>
             </div>
@@ -33,12 +33,31 @@
                 </label>
                 <p>{{userBalance}}</p>
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <label>
-                    # Transactions
+                    Transactions
                 </label>
-                <p>{{userTransactions}}</p>
-            </div> -->
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <td>Block #</td>
+                            <td>Time</td>
+                            <td>From</td>
+                            <td>To</td>
+                            <td>Value</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let trans of userTransactionData">
+                            <td>{{trans.blockNumber}}</td>
+                            <td>{{trans.timeStamp}}</td>
+                            <td>{{trans.from}}</td>
+                            <td>{{trans.to}}</td>
+                            <td>{{trans.value / 1000000000000000000}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- <div class="form-group">
                 <label>
                     Block Info

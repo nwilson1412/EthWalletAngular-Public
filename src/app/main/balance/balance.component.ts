@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import getweb3 from '../../components/web3';
 import Web3 from 'web3';
 
@@ -16,7 +17,7 @@ export class BalanceComponent implements OnInit {
     addressInput: string;
     userAddress: string;
     userBalance: number;
-    userTransactions: number;
+    userTransactionData: any = [];
     userBlockNumber: number;
     userBlockData: any;
     currentBLockNumber: number;
@@ -34,7 +35,7 @@ export class BalanceComponent implements OnInit {
     gethBlock: any;
     userIn: any;
 
-    constructor(){
+    constructor(private http: HttpClient){
         this.setupWeb3();
     }
     
@@ -46,10 +47,25 @@ export class BalanceComponent implements OnInit {
         this.getBalance(userAddress).then((response) => {
             this.userBalance = response / 1000000000000000000;
             this.userAddress = userAddress;
+            this.getAddressTransactions(userAddress).then((response: EtherScanTransactionDataModel) => {
+                for(var i = 0; i < response.result.length; i++){
+                    this.userTransactionData.push(response.result[0]);  
+                }
+                alert(this.userTransactionData)
+            });
             // this.getTransactions(userAddress).then((response) => {
             //     this.userTransactions = response;
             // });
         });
+    }
+
+    /* Test Etherscan */
+    getAddressTransactions(userAddress: string){
+        //return new Promise((resolve, reject) => {
+            return this.http.get('http://api.etherscan.io/api?module=account&action=txlist&address='
+            + userAddress + '&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken').toPromise();
+            //});
+        //});
     }
 
     /* Web 3 calls */
@@ -112,6 +128,34 @@ export class BalanceComponent implements OnInit {
     //     console.log(this.currentBlock);
     // });
 
+}
+
+/* will move these out later */
+class EtherScanTransactionDataResultModel{
+    blockNumber: string;
+    timeStamp: string;
+    hash: string;
+    nonce: string;
+    blockHash: string; 
+    transactionIndex: string;
+    from: string;
+    to: string;
+    value: string;
+    gas: string; 
+    gasPrice: string;
+    isError: string; 
+    txreceipt_status: string;
+    input: string;
+    contractAddress: string;
+    cumulativeGasUsed: string;
+    gasUsed: string;
+    confirmations: string;
+}
+
+class EtherScanTransactionDataModel {
+    status: string;
+    message: string;
+    result: EtherScanTransactionDataResultModel[];
 }
 
 
