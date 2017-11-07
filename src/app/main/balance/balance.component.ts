@@ -49,7 +49,7 @@ export class BalanceComponent implements OnInit {
             this.userAddress = userAddress;
             this.getAddressTransactions(userAddress).then((response: EtherScanTransactionDataModel) => {
                 for(var i = 0; i < response.result.length; i++){
-                    this.userTransactionData.push(response.result[0]);  
+                    this.userTransactionData.push(response.result[i]);  
                 }
             });
             // this.getTransactions(userAddress).then((response) => {
@@ -62,7 +62,7 @@ export class BalanceComponent implements OnInit {
     getAddressTransactions(userAddress: string){
         //return new Promise((resolve, reject) => {
             return this.http.get('https://api.etherscan.io/api?module=account&action=txlist&address='
-            + userAddress + '&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken').toPromise();
+            + userAddress + '&startblock=0&endblock='+this.getCurrentBlock+'&sort=desc&apikey=5R3BDH5G62J7PCWIIU7UHT2E4EDS1Z41G5').toPromise();
             //});
         //});
     }
