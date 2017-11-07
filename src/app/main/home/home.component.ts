@@ -14,11 +14,8 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {    
-    //web3a: any;
     cryptoList: any;
     ethStats: any;
-    //gethBlock: any;
-
 
     constructor(private http: HttpClient){
 

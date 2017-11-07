@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import getweb3 from '../../components/web3';
 import Web3 from 'web3'
 
@@ -8,7 +8,7 @@ import Web3 from 'web3'
     templateUrl: './balance.component.html',
     styleUrls: ['./balance.component.css']
 })
-export class BalanceComponent {
+export class BalanceComponent implements OnInit {
     web3: any;
     successData: any;
     successBlockNumber: number;
@@ -17,11 +17,8 @@ export class BalanceComponent {
     netGeth: any ;
     coinbase: any;
     coinBal: any;
+    gethBlock: any;
 
-    gethBlock = {
-        difficulty: '',
-        gasLimit: '', 
-        };
 
     constructor(){
 
@@ -36,10 +33,10 @@ export class BalanceComponent {
    //
    // this.web3.eth.gethBlock
 
-   console.log("isConnected=");
+   
    this.web3.eth.net.isListening().then((netlistenGeth) =>{
         this.netGeth = netlistenGeth;
-        console.log(this.netGeth);
+        console.log("isConnected=" + this.netGeth);
    });
 
    this.coinbase = '0x000000000000000000000000000000000000dead';
