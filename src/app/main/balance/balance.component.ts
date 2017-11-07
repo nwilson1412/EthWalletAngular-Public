@@ -51,7 +51,6 @@ export class BalanceComponent implements OnInit {
                 for(var i = 0; i < response.result.length; i++){
                     this.userTransactionData.push(response.result[0]);  
                 }
-                alert(this.userTransactionData)
             });
             // this.getTransactions(userAddress).then((response) => {
             //     this.userTransactions = response;
@@ -62,7 +61,7 @@ export class BalanceComponent implements OnInit {
     /* Test Etherscan */
     getAddressTransactions(userAddress: string){
         //return new Promise((resolve, reject) => {
-            return this.http.get('http://api.etherscan.io/api?module=account&action=txlist&address='
+            return this.http.get('https://api.etherscan.io/api?module=account&action=txlist&address='
             + userAddress + '&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken').toPromise();
             //});
         //});
