@@ -1,17 +1,19 @@
 import {Injectable} from '@angular/core';
 
 import Web3 from 'web3';
+import ENS from 'ethereum-ens';
 
 @Injectable()
 export class Web3Service{
 
     web3Connection = null; 
+    ensConnection = null;
 
     constructor(){
-        this.setupWeb3();
+        this.setup();
     }
 
-    setupWeb3(){
+    setup(){
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
         if(typeof (<any>window).web3 !== 'undefined'){
             // Use Mist/MetaMask's provider
@@ -21,6 +23,7 @@ export class Web3Service{
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/cyNgApVB0JFY4LaZomim'))
         }
+        // this.ensConnection = new ENS(this.web3Connection); ////// THIS line is breaking
     }
 
     public createAccount(){
@@ -54,6 +57,15 @@ export class Web3Service{
 
     public getBlockData(blockNumber: number){
         return this.web3Connection.eth.getBlock(blockNumber);
+    }
+
+    /* ENS calls */
+    public getDomainFromHex(address: string){
+        return this.ensConnection.reverse(address).addr();
+    }
+
+    public getHexFromDomain(domain: string){
+        return this.ensConnection.resolver(domain).addr();
     }
 
 }

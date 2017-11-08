@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
         // });
 
         
-        this.http.get('https://api.coinmarketcap.com/v1/ticker/?convert=AUD').subscribe(data => {
+        this.http.get('https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=AUD').subscribe(data => {
             this.cryptoList = data;
         });
         
