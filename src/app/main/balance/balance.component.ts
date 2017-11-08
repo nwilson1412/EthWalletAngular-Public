@@ -25,20 +25,22 @@ export class BalanceComponent implements OnInit {
     userBlockData: any;
     currentBLockNumber: number;
     currentBlockData: any;
+    ethAddress: any;
 
     constructor(
         private http: HttpClient,
         private web3serv: Web3Service
-    ){
-        //console.log(this.createAccount())
-    }
+    ){}
     
     ngOnInit():void {}
 
     /* Component calls (from the HTML view) */
     loadAddressData(userAddress){
-        
-        this.web3serv.getBalance(userAddress).then((response) => {
+        console.log(userAddress);
+        this.ethAddress = this.web3serv.EnsLookup(userAddress)
+        console.log(this.ethAddress);
+        this.web3serv.getBalance(this.ethAddress).then((response) => {
+           // this.web3serv.EnsLookup(userAddress).then((response) => {
             this.userBalance = response / 1000000000000000000;
             this.userAddress = userAddress;
             this.getAddressTransactions(userAddress).then((response: EtherScanTransactionDataModel) => {
@@ -48,6 +50,7 @@ export class BalanceComponent implements OnInit {
             });
         });
     }
+
 
     /* Test Etherscan API */
     getAddressTransactions(userAddress: string){
