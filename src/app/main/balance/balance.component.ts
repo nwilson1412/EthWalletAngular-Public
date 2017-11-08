@@ -1,8 +1,14 @@
+// 3rd Party
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import getweb3 from '../../components/web3';
-import Web3 from 'web3';
+
+// Services
+import { Web3Service } from '../../services/web3.service';
+
+// Models
+import { EtherScanTransactionDataModel } from '../../models/etherScanTransactionData.model';
+import { EtherScanTransactionDataResultModel } from '../../models/etherScanTransactionDataResult.model';
 
 @Component({
     selector: 'balance-view',
@@ -11,9 +17,6 @@ import Web3 from 'web3';
 })  
 
 export class BalanceComponent implements OnInit {
-    web3: any;
-
-    // ISaac vars
     addressInput: string;
     userAddress: string;
     userBalance: number;
@@ -23,22 +26,11 @@ export class BalanceComponent implements OnInit {
     currentBLockNumber: number;
     currentBlockData: any;
 
-
-    //Nath vars
-    successData: any;
-    successBlockNumber: number;
-    currentBlock: number;
-    webProvider: any;
-    netGeth: any ;
-    coinbase: any;
-    coinBal: any;
-    gethBlock: any;
-    userIn: any;
-
-    constructor(private http: HttpClient){
-        this.setupWeb3();
-        console.log(this.createAccount())
-
+    constructor(
+        private http: HttpClient,
+        private web3serv: Web3Service
+    ){
+        //console.log(this.createAccount())
     }
     
     ngOnInit():void {}
@@ -46,7 +38,7 @@ export class BalanceComponent implements OnInit {
     /* Component calls (from the HTML view) */
     loadAddressData(userAddress){
         
-        this.getBalance(userAddress).then((response) => {
+        this.web3serv.getBalance(userAddress).then((response) => {
             this.userBalance = response / 1000000000000000000;
             this.userAddress = userAddress;
             this.getAddressTransactions(userAddress).then((response: EtherScanTransactionDataModel) => {
@@ -54,113 +46,15 @@ export class BalanceComponent implements OnInit {
                     this.userTransactionData.push(response.result[i]);  
                 }
             });
-            // this.getTransactions(userAddress).then((response) => {
-            //     this.userTransactions = response;
-            // });
         });
     }
 
-    /* Test Etherscan */
+    /* Test Etherscan API */
     getAddressTransactions(userAddress: string){
-        //return new Promise((resolve, reject) => {
             return this.http.get('https://api.etherscan.io/api?module=account&action=txlist&address='
-            + userAddress + '&startblock=0&endblock='+this.getCurrentBlock+'&sort=desc&apikey=5R3BDH5G62J7PCWIIU7UHT2E4EDS1Z41G5').toPromise();
-            //});
-        //});
+            + userAddress + '&startblock=0&endblock='+this.web3serv.getCurrentBlock+'&sort=desc&apikey=5R3BDH5G62J7PCWIIU7UHT2E4EDS1Z41G5').toPromise();
     }
-
-    createAccount(){
-        return this.web3.eth.accounts.create();
-    }
-
-    /* Web 3 calls */
-    //used to ensure web3 is connecting to web3 provider
-    getStatus(){
-        return this.web3.eth.net.isListening();
-    }
-
-    getBalance(address: string){
-        return this.web3.eth.getBalance(address);
-    }
-
-    // This was in the API but apparently doesn't work? 
-    // getTransactions(address: string){
-    //     return this.web3.eth.getTransaction(address);
-    // }
-
-    getCurrentBlockNumber(){
-        return this.web3.eth.getBlockNumber();
-    }
-
-    getCurrentBlock(){
-        this.getCurrentBlockNumber().then((response) => {
-            return this.getBlockData(response);
-        });
-    }
-
-    getBlockData(blockNumber: number){
-        return this.web3.eth.getBlock(blockNumber);
-    }
-
-    /* SETUP STUFF */
-    setupWeb3(): void{
-        this.web3 = getweb3();
-    }
-
-
-    /* Just left these in for reference if you wanted theM? they're all part of the functions above now though. 
-    delete if you don't need */
-
-    // this.coinbase = '0x000000000000000000000000000000000000dead';
-    // //this.web3.fromWei(this.web3.eth.getBalance(account),"ether");
-    // console.log('this is the account; ' + this.coinbase)
-
-    // this.web3.eth.getBalance(this.coinbase).then((coin) =>{
-    //     coin = coin / 1000000000000000000;
-    //     this.coinBal = coin
-
-    // });
-
-
-    // this.web3.eth.getBlockNumber().then((successBlockNumber) => {
-    //     this.currentBlock = successBlockNumber;
-    // //  console.log(this.currentBlock);
-    // });
-    
-    // this.web3.eth.getBlock(0).then((successData) => {
-    //     this.gethBlock = successData;
-    //     console.log(this.gethBlock);
-    //     console.log(this.currentBlock);
-    // });
-
 }
 
-/* will move these out later */
-class EtherScanTransactionDataResultModel{
-    blockNumber: string;
-    timeStamp: string;
-    hash: string;
-    nonce: string;
-    blockHash: string; 
-    transactionIndex: string;
-    from: string;
-    to: string;
-    value: string;
-    gas: string; 
-    gasPrice: string;
-    isError: string; 
-    txreceipt_status: string;
-    input: string;
-    contractAddress: string;
-    cumulativeGasUsed: string;
-    gasUsed: string;
-    confirmations: string;
-}
-
-class EtherScanTransactionDataModel {
-    status: string;
-    message: string;
-    result: EtherScanTransactionDataResultModel[];
-}
 
 

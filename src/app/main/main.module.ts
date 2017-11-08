@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { BalanceComponent } from './balance/balance.component';
 import { WalletComponent } from './wallet/wallet.component';
 
+import { Web3Service } from '../services/web3.service';
+
 @NgModule({
     declarations: [
         HomeComponent,
@@ -27,7 +29,9 @@ import { WalletComponent } from './wallet/wallet.component';
         WalletComponent
     ],
   
-    providers: [],
+    providers: [
+        Web3Service
+    ],
 
 })
 export class MainModule {}

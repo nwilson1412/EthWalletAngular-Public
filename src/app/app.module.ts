@@ -20,14 +20,14 @@ import { MainComponent } from './main/main.component';
         MainModule,
     ],
 
-  declarations: [
-    AppComponent,
-    MainComponent,
-    HeaderComponent
-  ],
-  
-  providers: [],
+    declarations: [
+        AppComponent,
+        MainComponent,
+        HeaderComponent
+    ],
+    
+    providers: [],
 
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
