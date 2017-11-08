@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 
 import Web3 from 'web3';
-import ENS from 'ethereum-ens';
 
 @Injectable()
 export class Web3Service{
@@ -23,7 +22,6 @@ export class Web3Service{
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/cyNgApVB0JFY4LaZomim'))
         }
-        //this.ensConnection = new ENS(this.web3Connection);
     }
 
     public createAccount(){
