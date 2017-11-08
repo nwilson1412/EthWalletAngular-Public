@@ -37,6 +37,8 @@ export class BalanceComponent implements OnInit {
 
     constructor(private http: HttpClient){
         this.setupWeb3();
+        console.log(this.createAccount())
+
     }
     
     ngOnInit():void {}
@@ -65,6 +67,10 @@ export class BalanceComponent implements OnInit {
             + userAddress + '&startblock=0&endblock='+this.getCurrentBlock+'&sort=desc&apikey=5R3BDH5G62J7PCWIIU7UHT2E4EDS1Z41G5').toPromise();
             //});
         //});
+    }
+
+    createAccount(){
+        return this.web3.eth.accounts.create();
     }
 
     /* Web 3 calls */
