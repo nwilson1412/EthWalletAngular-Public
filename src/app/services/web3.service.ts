@@ -6,7 +6,7 @@ import ENS from 'ethereum-ens';
 @Injectable()
 export class Web3Service{
 
-    web3Connection = null; 
+    public web3Connection = null; 
     ensConnection = null;
 
     constructor(){
@@ -23,7 +23,7 @@ export class Web3Service{
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/cyNgApVB0JFY4LaZomim'))
         }
-        // this.ensConnection = new ENS(this.web3Connection); ////// THIS line is breaking
+        //this.ensConnection = new ENS(this.web3Connection);
     }
 
     public createAccount(){

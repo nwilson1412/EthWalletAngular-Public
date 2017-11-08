@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { HomeComponent } from './home/home.component';
 import { BalanceComponent } from './balance/balance.component';
@@ -21,7 +24,9 @@ import { Web3Service } from '../services/web3.service';
         BrowserModule,
         FormsModule,
         CommonModule,
-        HttpClientModule
+        HttpClientModule,
+        DropDownsModule,
+        BrowserAnimationsModule
     ],
 
     exports: [

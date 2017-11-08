@@ -1,77 +1,45 @@
 <div class="row">
     <div class="col-sm-12">
-
-        <!-- <div class="card col-sm-4" *ngIf="ethStats">
-            <div class="card-header row">
-                <h3>{{ethStats[0].name}}</h3>
-            </div>
-            <div class="card-body">
-                <div class="table table-responsive">
-                    <tbody>
-                        <tr>
-                            <td>Symbol</td>
-                            <td>{{ethStats[0].symbol}}</td>
-                        </tr>
-                        <tr>
-                            <td>Rank</td>
-                            <td>{{ethStats[0].rank}}</td>
-                        </tr>
-                        <tr>
-                            <td>Price</td>
-                            <td>{{ethStats[0].price_aud}}</td>
-                        </tr>
-                        <tr>
-                            <td>Market Cap</td>
-                            <td>{{ethStats[0].market_cap_aud}}</td>
-                        </tr>
-                    </tbody>
+            <h2 class="">EthWallet Prototype Application</h2>
+            <hr/>
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form">
+                        <div class="form-group">
+                            <label>Select</label>
+                            <select name="cryptoSelected" class="form-control" [(ngModel)]="cryptoSelected" (change)="selectCrypto()">
+                                <option *ngFor="let coin of cryptoList" [value]="coin.id" >{{coin.name}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div *ngIf="cryptoStats">
+                         <div>
+                            <div>
+                                <h3>{{cryptoStats.name}}</h3>
+                            </div>
+                            <div class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <td>Symbol</td>
+                                        <td>Rank</td>
+                                        <td>Price</td>
+                                        <td>Market Cap</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{cryptoStats.symbol}}</td>
+                                        <td>{{cryptoStats.rank}}</td>
+                                        <td>{{cryptoStats.price_aud}}</td>
+                                        <td>{{cryptoStats.market_cap_aud}}</td>
+                                    </tr>
+                                </tbody>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
-
-        </div> -->
-        <!--
-        <h1>{{gethBlock.difficulty}}</h1>  
-
-        <div *ngIf="gethBlock">
-            <div class="card col-sm-3" *ngFor="let val of gethBlock"></div>
-            <div class="card-header row">
-            <h3>{{val.difficulty}}</h3>
-        </div>
-
-        </div>
-    -->
-    <!--<h1>Current Block! {{this.currentBlock}}</h1>
-    <h1>Current Difficulty! {{gethBlock.difficulty}}</h1>-->
-    
-
-        <div *ngIf="cryptoList">
-            <div class="card col-sm-3" *ngFor="let coin of cryptoList">
-                <div class="card-header row">
-                    <h3>{{coin.name}}</h3>
-                </div>
-                <div class="card-body">
-                    <div class="table table-responsive">
-                        <tbody>
-                            <tr>
-                                <td>Symbol</td>
-                                <td>{{coin.symbol}}</td>
-                            </tr>
-                            <tr>
-                                <td>Rank</td>
-                                <td>{{coin.rank}}</td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td>{{coin.price_aud}}</td>
-                            </tr>
-                            <tr>
-                                <td>Market Cap</td>
-                                <td>{{coin.market_cap_aud}}</td>
-                            </tr>
-                        </tbody>
-                    </div>
-                </div>
-            </div>
-        </div> 
     </div>
 </div>
