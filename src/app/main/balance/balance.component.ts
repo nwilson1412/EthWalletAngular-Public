@@ -19,14 +19,13 @@ import { EtherScanTransactionDataResultModel } from '../../models/etherScanTrans
 
 export class BalanceComponent implements OnInit {
     addressInput: string;
-    userAddress: string;
     userBalance: number;
     userTransactionData: any = [];
-    userBlockNumber: number;
-    userBlockData: any;
-    currentBLockNumber: number;
-    currentBlockData: any;
-    ethAddress: any;
+    // userBlockNumber: number;
+    // userBlockData: any;
+    // currentBLockNumber: number;
+    // currentBlockData: any;
+    // ethAddress: any;
 
     constructor(
         private http: HttpClient,
@@ -37,18 +36,23 @@ export class BalanceComponent implements OnInit {
 
    }
 
+   resetStats(){
+       this.addressInput = null
+        this.userBalance = null;
+        this.userTransactionData = [];
+   }
 
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
-    loadAddressData(userAddress){
-        if(userAddress.slice(-1) == 'h'){
-            this.web3serv.domainToHexLookup(userAddress).then((hexAddr) =>
+    loadAddressData(){
+        if(this.addressInput.slice(-1) == 'h'){
+            this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
             { 
                 this.getBalance(hexAddr);     
             })
         }
         else{
-           this.getBalance(userAddress)
+           this.getBalance(this.addressInput);
         }
     }
 
@@ -56,13 +60,11 @@ export class BalanceComponent implements OnInit {
     getBalance(userAddr){
         this.web3serv.getBalance(userAddr).then((response) => {
             this.userBalance = response / 1000000000000000000;
-            this.userAddress = userAddr;
-
         });
         this.getAddressTransactions(userAddr).then((response: EtherScanTransactionDataModel) => {
             for(var i = 0; i < response.result.length; i++){
                 this.userTransactionData.push(response.result[i]);  
-              //  console.log(i)
+                this.addressInput = '';
             }
         });
 
