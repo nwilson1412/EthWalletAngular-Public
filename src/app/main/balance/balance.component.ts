@@ -35,20 +35,32 @@ export class BalanceComponent implements OnInit {
     ngOnInit():void {}
 
     /* Component calls (from the HTML view) */
+    /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
     loadAddressData(userAddress){
-        console.log(userAddress);
-        this.ethAddress = this.web3serv.domainToHexLookup(userAddress)
-        console.log(this.ethAddress);
-        this.web3serv.getBalance(this.ethAddress).then((response) => {
-           // this.web3serv.EnsLookup(userAddress).then((response) => {
+
+        if(userAddress.slice(-1) == 'h'){
+            this.web3serv.domainToHexLookup(userAddress).then((hexAddr) =>
+            { 
+                this.getBalance(hexAddr);     
+            })
+        }
+        else{
+           this.getBalance(userAddress)
+        }
+    }
+
+    /* Balance call, grabs account balance from etherum node */
+    getBalance(userBal){
+        this.web3serv.getBalance(userBal).then((response) => {
             this.userBalance = response / 1000000000000000000;
-            this.userAddress = userAddress;
-            this.getAddressTransactions(userAddress).then((response: EtherScanTransactionDataModel) => {
+            this.userAddress = userBal;
+            this.getAddressTransactions(userBal).then((response: EtherScanTransactionDataModel) => {
                 for(var i = 0; i < response.result.length; i++){
                     this.userTransactionData.push(response.result[i]);  
                 }
             });
         });
+
     }
 
 
