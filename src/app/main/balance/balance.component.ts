@@ -45,6 +45,7 @@ export class BalanceComponent implements OnInit {
         this.userBalance = null;
         this.userTransactionData = [];
         this.userAddress = null;
+        
    }
 
     /* Component calls (from the HTML view) */
@@ -54,6 +55,7 @@ export class BalanceComponent implements OnInit {
         this.userTransactionData = [];
         this.userBalance = null;
         this.userAddress = null;
+        this.userTransactionCount = null;
         try{
             if(this.addressInput.slice(-1) == 'h'){
                 this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
@@ -72,6 +74,7 @@ export class BalanceComponent implements OnInit {
 
             }
         }catch(error){
+            this.userAddress = null;
             this.error = error;
         }
         
