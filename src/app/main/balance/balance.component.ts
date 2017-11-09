@@ -30,8 +30,6 @@ export class BalanceComponent implements OnInit {
     ethAddress: any;
     public loading = false;
 
-    busy: Subscription;
-
     constructor(
         private http: HttpClient,
         private web3serv: Web3Service
@@ -42,7 +40,6 @@ export class BalanceComponent implements OnInit {
 
   //  }
     async ngOnInit() {
-        this.busy = this.web3serv.domainToHexLookup('...').subscribe();
     }
 
 
