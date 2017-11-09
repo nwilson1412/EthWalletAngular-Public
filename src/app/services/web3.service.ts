@@ -27,15 +27,13 @@ export class Web3Service{
         if(typeof (<any>window).web3 !== 'undefined'){
             // Use Mist/MetaMask's provider
             this.web3Connection = new Web3((<any>window).web3.currentProvider);
-            //const provider = (this.web3Connection.currentProvider)
-            //this.ens = new ENS({ provider, network: '1' })
 
         }else{
             Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+           
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/cyNgApVB0JFY4LaZomim'))
-            //const provider = (this.web3Connection.currentProvider)
-            //this.ens = new ENS({ provider, network: '1' })
+
         }
         const provider = (this.web3Connection.currentProvider);
         this.ens = new ENS({ provider, network: '1' });

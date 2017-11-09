@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CoolHttp } from 'angular2-cool-http';
 
 // Services
 import { Web3Service } from '../../services/web3.service';
@@ -19,7 +18,6 @@ import { EtherScanTransactionDataResultModel } from '../../models/etherScanTrans
 
 
 export class BalanceComponent implements OnInit {
-    coolHttp: CoolHttp;
     addressInput: string;
     userAddress: string;
     userBalance: number;
@@ -29,29 +27,20 @@ export class BalanceComponent implements OnInit {
     currentBLockNumber: number;
     currentBlockData: any;
     ethAddress: any;
-    public loading = false;
 
     constructor(
         private http: HttpClient,
         private web3serv: Web3Service,
-        coolHttp: CoolHttp
-    ){
-        this.coolHttp = coolHttp;
-    }
+    ){ }
     
-   // ngOnInit():void {
+   ngOnInit():void {
 
-  //  }
-    async ngOnInit() {
-        /* THIS WILL BREAK THE SITE */
-        let response = await this.coolHttp.getAsync('api/request');
-    }
+   }
 
 
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
-    loadAddressData(userAddress){ 
-        this.loading = true;
+    loadAddressData(userAddress){
         if(userAddress.slice(-1) == 'h'){
             this.web3serv.domainToHexLookup(userAddress).then((hexAddr) =>
             { 
@@ -73,6 +62,7 @@ export class BalanceComponent implements OnInit {
         this.getAddressTransactions(userAddr).then((response: EtherScanTransactionDataModel) => {
             for(var i = 0; i < response.result.length; i++){
                 this.userTransactionData.push(response.result[i]);  
+              //  console.log(i)
             }
         });
 
