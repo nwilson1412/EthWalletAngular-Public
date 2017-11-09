@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CoolHttp } from 'angular2-cool-http';
+import {Subscription} from 'rxjs';
 
 // Services
 import { Web3Service } from '../../services/web3.service';
@@ -19,7 +19,6 @@ import { EtherScanTransactionDataResultModel } from '../../models/etherScanTrans
 
 
 export class BalanceComponent implements OnInit {
-    coolHttp: CoolHttp;
     addressInput: string;
     userAddress: string;
     userBalance: number;
@@ -31,20 +30,19 @@ export class BalanceComponent implements OnInit {
     ethAddress: any;
     public loading = false;
 
+    busy: Subscription;
+
     constructor(
         private http: HttpClient,
-        private web3serv: Web3Service,
-        coolHttp: CoolHttp
+        private web3serv: Web3Service
     ){
-        this.coolHttp = coolHttp;
     }
     
    // ngOnInit():void {
 
   //  }
     async ngOnInit() {
-        /* THIS WILL BREAK THE SITE */
-        let response = await this.coolHttp.getAsync('api/request');
+        this.busy = this.web3serv.domainToHexLookup('...').subscribe();
     }
 
 
