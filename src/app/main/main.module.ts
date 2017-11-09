@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HomeComponent } from './home/home.component';
 import { BalanceComponent } from './balance/balance.component';
@@ -22,6 +23,7 @@ import { Web3Service } from '../services/web3.service';
         FormsModule,
         CommonModule,
         HttpClientModule,
+        NgbModule
     ],
 
     exports: [

@@ -16,8 +16,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class HomeComponent implements OnInit {    
     cryptoList: Array<CryptocurrencyObject> = [];
-    cryptoSelected: any;
-    cryptoStats: any;
+    cryptoSelected: any = {};
 
     constructor(private http: HttpClient){
         this.loadData();   
@@ -28,17 +27,12 @@ export class HomeComponent implements OnInit {
     loadData(){
         this.getCryptoList().then((response: CryptocurrencyObject[]) => {
             this.cryptoList = response;
-            this.cryptoStats = this.cryptoList[1];
-            this.cryptoSelected = this.cryptoList[1].id;
+            this.cryptoSelected = this.cryptoList[1];
         });
     }
 
-    selectCrypto(){
-        this.cryptoList.forEach(coin => {
-            if(coin.id == this.cryptoSelected){
-                this.cryptoStats = coin;
-            }
-        });
+    selectCrypto(coin: CryptocurrencyObject){
+        this.cryptoSelected = coin;
     }
 
     getCryptoList(){

@@ -3,42 +3,50 @@
             <h2 class="">EthWallet Prototype Application</h2>
             <hr/>
             <div class="row">
-                <div class="col-md-6">
-                    <form class="form">
-                        <div class="form-group">
-                            <label>Select</label>
-                            <select name="cryptoSelected" class="form-control" [(ngModel)]="cryptoSelected" (change)="selectCrypto()">
-                                <option *ngFor="let coin of cryptoList" [value]="coin.id" >{{coin.name}}</option>
-                            </select>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div ngbDropdown class="text-center">
+                                <button class="btn btn-outline-default" id="cryptoSelected" ngbDropdownToggle item-width="100%">{{cryptoSelected.name}}</button>
+                                <div ngbDropdownMenu aria-labelledy="cryptoSelected" style="max-height: 300px; overflow-y: scroll;">
+                                    <button class="dropdown-item" *ngFor="let coin of cryptoList" (click)="selectCrypto(coin)">{{coin.name}}</button>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <div *ngIf="cryptoStats">
-                         <div>
+                        <div class="col-sm-9">
                             <div>
-                                <h3>{{cryptoStats.name}}</h3>
-                            </div>
-                            <div class="table table-responsive">
-                                <thead>
-                                    <tr>
-                                        <td>Symbol</td>
-                                        <td>Rank</td>
-                                        <td>Price</td>
-                                        <td>Market Cap</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{{cryptoStats.symbol}}</td>
-                                        <td>{{cryptoStats.rank}}</td>
-                                        <td>{{cryptoStats.price_aud}}</td>
-                                        <td>{{cryptoStats.market_cap_aud}}</td>
-                                    </tr>
-                                </tbody>
+                                <div *ngIf="cryptoSelected">
+                                    <div>
+                                        <div>
+                                            <h3>{{cryptoSelected.name}}</h3>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <td>Symbol</td>
+                                                    <td>Rank</td>
+                                                    <td>Price</td>
+                                                    <td>Market Cap</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{cryptoSelected.symbol}}</td>
+                                                    <td>{{cryptoSelected.rank}}</td>
+                                                    <td>{{cryptoSelected.price_aud}}</td>
+                                                    <td>{{cryptoSelected.market_cap_aud}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
+                    <hr/>
+                </div>
+                <div class="col-sm-12">
+                    / Some Content Here ?? /
                 </div>
             </div>
     </div>
