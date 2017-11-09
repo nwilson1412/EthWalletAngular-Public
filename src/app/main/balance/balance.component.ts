@@ -22,6 +22,7 @@ export class BalanceComponent implements OnInit {
     userBalance: number;
     userTransactionData: any = [];
     error: string;
+    userTransactionCount: number;
     // userBlockNumber: number;
     // userBlockData: any;
     // currentBLockNumber: number;
@@ -82,6 +83,7 @@ export class BalanceComponent implements OnInit {
                 this.userTransactionData.push(response.result[i]);  
                 this.addressInput = '';
             }
+            this.userTransactionCount = response.result.length;
         }).catch((error) => {
             console.log(error);
             this.error = error;
