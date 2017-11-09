@@ -16,6 +16,7 @@ import { EtherScanTransactionDataResultModel } from '../../models/etherScanTrans
     styleUrls: ['./balance.component.css']
 })  
 
+
 export class BalanceComponent implements OnInit {
     addressInput: string;
     userAddress: string;

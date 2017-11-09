@@ -13,6 +13,7 @@
                         <div class="form-group">
                             <button type="button" class="btn btn-info"
                             (click)='loadAddressData(addressInput)'
+                            (click)='showdiv'
                             [disabled]="!addressInput">
                                 Check Address
                             </button>
@@ -23,6 +24,13 @@
                 </div>
                 <div class="col-sm-12">
                     <p class="h5">Address Stats</p>
+                    
+                   
+                    <p  *ngIf = 'this.userBalance' class="h6">Address Balance; {{this.userBalance}} Eth</p>
+                    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <i class="fa fa-refresh fa-spin" style="font-size:24px"></i>-->
+                    
+                    
                     <table class="table table-responsive table-striped">
                         <thead>
                             <tr>
@@ -33,8 +41,8 @@
                                 <td>Value</td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr *ngFor="let trans of userTransactionData">
+                        <tbody *ngIf='userTransactionData'>
+                            <tr  *ngFor="let trans of userTransactionData">
                                 <td>{{trans.blockNumber}}</td>
                                 <td>{{trans.timeStamp}}</td>
                                 <td>{{trans.from}}</td>
