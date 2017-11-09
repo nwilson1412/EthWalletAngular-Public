@@ -10,11 +10,12 @@ h2, h3 {
     font-weight: lighter;
 }
 body {
-    margin: 2em;
+
 }
 body, input[text], button {
+  background-color: #343535;
     color: #888;
-    font-family: Cambria, Georgia;
+    font-family: Arial, Helvetica, sans-serif;
 }
 /* everywhere else */
 * {
