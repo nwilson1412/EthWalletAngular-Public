@@ -37,7 +37,7 @@ export class BalanceComponent implements OnInit {
    }
 
    resetStats(){
-       this.addressInput = null
+        this.addressInput = null
         this.userBalance = null;
         this.userTransactionData = [];
    }
@@ -45,6 +45,8 @@ export class BalanceComponent implements OnInit {
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
     loadAddressData(){
+        this.userTransactionData = [];
+        this.userBalance = null;
         if(this.addressInput.slice(-1) == 'h'){
             this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
             { 
