@@ -37,8 +37,7 @@ export class BalanceComponent implements OnInit {
 
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
-    loadAddressData(userAddress){
-
+    loadAddressData(userAddress){ 
         if(userAddress.slice(-1) == 'h'){
             this.web3serv.domainToHexLookup(userAddress).then((hexAddr) =>
             { 
@@ -51,13 +50,13 @@ export class BalanceComponent implements OnInit {
     }
 
     /* Balance call, grabs account balance from etherum node */
-    getBalance(userBal){
-        this.web3serv.getBalance(userBal).then((response) => {
+    getBalance(userAddr){
+        this.web3serv.getBalance(userAddr).then((response) => {
             this.userBalance = response / 1000000000000000000;
-            this.userAddress = userBal;
+            this.userAddress = userAddr;
 
         });
-        this.getAddressTransactions(userBal).then((response: EtherScanTransactionDataModel) => {
+        this.getAddressTransactions(userAddr).then((response: EtherScanTransactionDataModel) => {
             for(var i = 0; i < response.result.length; i++){
                 this.userTransactionData.push(response.result[i]);  
             }
