@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+// Components
+import {PkRevealModal} from '../../components/modals/pkRevealModal.component';
 
 // Services
 import { Web3Service } from '../../services/web3.service';
@@ -10,18 +14,31 @@ import { Web3Service } from '../../services/web3.service';
 })
 export class WalletComponent {
 
-    constructor(private web3serv: Web3Service){
+    generatedAccount: EthAccountModel; 
+
+    constructor(
+        private web3serv: Web3Service,
+        private modalService: NgbModal
+    ){
 
     }
 
     generateAccount(){
-        this.web3serv.createAccount().then((response) => {
-
+        this.web3serv.createAccount().then((response: EthAccountModel) => {
+            this.generatedAccount = response;
+            console.log(response);
         });
+    }
+
+    revealPrivateKey(){
+        const modal = this.modalService.open(PkRevealModal).componentInstance;
+        modal.privateKey = this.generatedAccount.privateKey;
     }
 
 }
 
+
+//#region models
 export class EthAccountModel{
     address: string;
     privateKey: string;
@@ -36,15 +53,28 @@ export class EthTransactionModel{
     gas: number;
 }
 
-export class EncryptedAccountModel{
+export class EncryptedEthAccountModel{
     version: number;
     id: string;
     address: string;
-    crypto: {
-    }
+    crypto: EthCryptoModel;
 }
 
-export class KdfParams{
-
+export class EthCryptoModel{
+    ciphertext: string;
+    cipherparams: { iv: string; };
+    cipher: string;
+    kdf: string;
+    kdfparams: EthKdfParamsModel;
+    mac: string;
 }
+
+export class EthKdfParamsModel{
+    dklen: number;
+    salt: string;
+    n: number;
+    r: number;
+    p: number;
+}
+//#endregion
 

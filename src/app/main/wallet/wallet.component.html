@@ -3,7 +3,23 @@
         <h2 class="">Wallet</h2>
         <hr/>
         <div class="row">
-            <button class="btn btn-defaul" (click)="generateNewAccount">Generate Eth Account</button>
+            <div class="col-sm-12">
+                    <button class="btn btn-default" (click)="generateAccount()">Generate Eth Account</button>      
+                    <button class="btn btn-info" (click)="exportAccount()" *ngIf="generatedAccount">Encrypt and Export</button>               
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="form" *ngIf="generatedAccount">
+                <div class="form-group">
+                    <label>Address</label>
+                    <p>{{generatedAccount.address}}</p>
+                </div>
+                <div class="form-group">
+                    <label>Private Key</label>
+                    <p style="text-decoration: underline; cursor: pointer;" (click)="revealPrivateKey()">Click to reveal private key</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

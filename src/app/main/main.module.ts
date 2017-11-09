@@ -9,13 +9,20 @@ import { HomeComponent } from './home/home.component';
 import { BalanceComponent } from './balance/balance.component';
 import { WalletComponent } from './wallet/wallet.component';
 
+import {PkRevealModal} from '../components/modals/pkRevealModal.component';
+
 import { Web3Service } from '../services/web3.service';
 
 @NgModule({
     declarations: [
         HomeComponent,
         BalanceComponent,
-        WalletComponent
+        WalletComponent,
+        PkRevealModal
+    ],
+
+    entryComponents:[
+        PkRevealModal
     ],
 
     imports: [
@@ -26,10 +33,7 @@ import { Web3Service } from '../services/web3.service';
         NgbModule
     ],
 
-    exports: [
-        BalanceComponent,
-        WalletComponent
-    ],
+    exports: [],
   
     providers: [
         Web3Service

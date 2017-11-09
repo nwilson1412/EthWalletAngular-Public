@@ -41,10 +41,11 @@ export class Web3Service{
     //#region WEB3 ACCOUNT FUNCTIONS
 
     public createAccount(){
-        return this.web3Connection.eth.accounts.create();
+        return new Promise((resolve, reject) => {
+            var account = this.web3Connection.eth.accounts.create();
+            resolve(account);
+        });
     }
-
-    public 
     //#endregion
 
     //#region ENS LOOKUP FUNCTIONS

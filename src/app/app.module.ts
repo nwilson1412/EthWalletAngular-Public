@@ -21,7 +21,7 @@ import { MainComponent } from './main/main.component';
         MainModule,
         NgbModule.forRoot()
     ],
-
+    
     declarations: [
         AppComponent,
         MainComponent,
