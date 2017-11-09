@@ -17,11 +17,11 @@ export class Web3Service{
 
 
     constructor(){
-
         this.setup();
+    } 
 
-        } 
 
+    /* Setup Functions */
     setup(){
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
         if(typeof (<any>window).web3 !== 'undefined'){
@@ -39,19 +39,33 @@ export class Web3Service{
     }
 
 
-    public EnsLookup(userInputEns: string){
+    public domainToHexLookup(userInputEns: string){
         //used to look up ENS addresses on the Ethereum Blockchain
-        this.ens.lookup(userInputEns)
-        .then((address) => {
-            this.address = address;
+        this.ens.lookup(userInputEns).then((response) => {
+
+            this.address = response;
             console.log(this.address);
             return this.address;
+
+        }).catch((reason) => {
+
+            console.error(reason)
+
+
         })
-        .catch((reason) => {
-          console.error(reason)
-          return reason;
+    }
+
+    public hexToDomainLookup(userInputHex: string){
+        // used to lookup hex addresses from their ENS address
+        this.ens.reverse(userInputHex).then((response) => {
+            this.address = response;
+            console.log(this.address);
+            return this.address
+        }).catch((err) => {
+            console.error(err);
+            return err;
         })
-      }
+    }
 
     public createAccount(){
         return this.web3Connection.eth.accounts.create();

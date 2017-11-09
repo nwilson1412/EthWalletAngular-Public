@@ -37,7 +37,7 @@ export class BalanceComponent implements OnInit {
     /* Component calls (from the HTML view) */
     loadAddressData(userAddress){
         console.log(userAddress);
-        this.ethAddress = this.web3serv.EnsLookup(userAddress)
+        this.ethAddress = this.web3serv.domainToHexLookup(userAddress)
         console.log(this.ethAddress);
         this.web3serv.getBalance(this.ethAddress).then((response) => {
            // this.web3serv.EnsLookup(userAddress).then((response) => {
