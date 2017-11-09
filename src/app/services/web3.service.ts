@@ -49,6 +49,13 @@ export class Web3Service{
         });
     }
 
+    public pkToAccount(pk: string){
+        return new Promise((resolve, reject) => {
+            var account = this.web3Connection.eth.accounts.privateKeyToAccount(pk);
+            resolve(account);
+        });
+    }
+
     public encryptAccount(pk: string, password: string){
         return new Promise((resolve, reject) => {
             var encrypted = this.web3Connection.eth.accounts.encrypt(pk, password);

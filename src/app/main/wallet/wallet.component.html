@@ -4,26 +4,50 @@
         <hr/>
         <div class="row">
             <div class="col-sm-6">
-                <div class="col-sm-6">
-                    <button class="btn btn-default" (click)="generateAccount()">Generate Eth Account</button>      
-                </div>
-                <div class="col-sm-6">
-                    <button class="btn btn-info" (click)="encryptPrivateKey()" *ngIf="generatedAccount">Encrypt and Export</button>               
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button class="btn btn-default" (click)="generateAccount()" style="width: 100%">Generate</button>      
+                    </div>
+                    <div class="col-sm-6" *ngIf="generatedAccount">
+                        <button class="btn btn-info" (click)="encryptPrivateKey()" style="width: 100%">Export</button>               
+                    </div>
                 </div>
             </div>
             
         </div>
         <hr/>
         <div class="row">
-            <div class="form" *ngIf="generatedAccount">
-                <div class="form-group">
-                    <label>Address</label>
-                    <p>{{generatedAccount.address}}</p>
+            <div class="col-sm-6" *ngIf="!generatedAccount">
+                <!-- <div class="form">
+                    <input type="file" class="form-control-file" [(ngModel)]="file" (change)="import(file)" placeholder="Import a wallet private key..." accept="text/plain" />
+                </div> -->
+                <form class="form" class="center-text">
+                    <div class="form-group">
+                        <label>Generate Account from Private Key</label>
+                        <input name="importPrivateKeyInput" type="text" class="form-control" [(ngModel)]="importedPrivateKey"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info" type="button" (click)="importPrivateKey()" [disabled]="!importedPrivateKey">Import</button>                            
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="form" *ngIf="generatedAccount">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <p>{{generatedAccount.address}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Private Key</label>
+                        <p style="text-decoration: underline; cursor: pointer;" (click)="revealPrivateKey()">Click to reveal private key</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Private Key</label>
-                    <p style="text-decoration: underline; cursor: pointer;" (click)="revealPrivateKey()">Click to reveal private key</p>
-                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row" *ngIf="generatedAccount">
+            <div class="col-sm-12">
+                <button class="btn btn-danger" (click)="generatedAccount=null">Clear Account</button>
             </div>
         </div>
     </div>
