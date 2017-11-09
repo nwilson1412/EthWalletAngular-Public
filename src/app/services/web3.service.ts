@@ -38,40 +38,28 @@ export class Web3Service{
         this.ens = new ENS({ provider, network: '1' })
     }
 
-
-    public domainToHexLookup(userInputEns: string){
-        //used to look up ENS addresses on the Ethereum Blockchain
-        this.ens.lookup(userInputEns).then((response) => {
-
-            this.address = response;
-            console.log(this.address);
-            return this.address;
-
-        }).catch((reason) => {
-
-            console.error(reason)
-
-
-        })
-    }
-
-    public hexToDomainLookup(userInputHex: string){
-        // used to lookup hex addresses from their ENS address
-        this.ens.reverse(userInputHex).then((response) => {
-            this.address = response;
-            console.log(this.address);
-            return this.address
-        }).catch((err) => {
-            console.error(err);
-            return err;
-        })
-    }
+    //#region WEB3 ACCOUNT FUNCTIONS
 
     public createAccount(){
         return this.web3Connection.eth.accounts.create();
     }
 
-    /* Web 3 calls */
+    public 
+    //#endregion
+
+    //#region ENS LOOKUP FUNCTIONS
+    public domainToHexLookup(userInputEns: string){
+        //used to look up ENS addresses on the Ethereum Blockchain
+        return this.ens.lookup(userInputEns);
+    }
+
+    public hexToDomainLookup(userInputHex: string){
+        // used to lookup hex addresses from their ENS address
+        return this.ens.reverse(userInputHex);
+    }
+    //#endregion
+
+    //#region Web3 Calls
     //used to ensure web3 is connecting to web3 provider
     public getStatus(){
         return this.web3Connection.eth.net.isListening();
@@ -80,8 +68,6 @@ export class Web3Service{
     public getBalance(address: string){
         return this.web3Connection.eth.getBalance(address);
     }
-
-
 
     // This was in the API but apparently doesn't work? 
     // getTransactions(address: string){
@@ -101,14 +87,6 @@ export class Web3Service{
     public getBlockData(blockNumber: number){
         return this.web3Connection.eth.getBlock(blockNumber);
     }
-
-    /* ENS calls */
-    public getDomainFromHex(address: string){
-        return this.ensConnection.reverse(address).addr();
-    }
-
-    public getHexFromDomain(domain: string){
-        return this.ensConnection.resolver(domain).addr();
-    }
+    //#endregion
 
 }
