@@ -54,11 +54,12 @@ export class BalanceComponent implements OnInit {
         this.web3serv.getBalance(userBal).then((response) => {
             this.userBalance = response / 1000000000000000000;
             this.userAddress = userBal;
-            this.getAddressTransactions(userBal).then((response: EtherScanTransactionDataModel) => {
-                for(var i = 0; i < response.result.length; i++){
-                    this.userTransactionData.push(response.result[i]);  
-                }
-            });
+
+        });
+        this.getAddressTransactions(userBal).then((response: EtherScanTransactionDataModel) => {
+            for(var i = 0; i < response.result.length; i++){
+                this.userTransactionData.push(response.result[i]);  
+            }
         });
 
     }
