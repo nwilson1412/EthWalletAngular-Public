@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 // Components
 import {PkRevealModal} from '../../components/modals/pkRevealModal.component';
@@ -33,6 +33,12 @@ export class WalletComponent {
     revealPrivateKey(){
         const modal = this.modalService.open(PkRevealModal).componentInstance;
         modal.privateKey = this.generatedAccount.privateKey;
+    }
+
+    encryptPrivateKey(){
+    //    this.web3serv.encryptAccount(this.generatedAccount.privateKey, 'test').then((response: EncryptedEthAccountModel) => {
+    //         console.log(response);
+    //     });
     }
 
 }

@@ -34,8 +34,8 @@ export class Web3Service{
             const provider = (this.web3Connection.currentProvider)
             this.ens = new ENS({ provider, network: '1' })
         }
-        const provider = (this.web3Connection.currentProvider)
-        this.ens = new ENS({ provider, network: '1' })
+        const provider = (this.web3Connection.currentProvider);
+        this.ens = new ENS({ provider, network: '1' });
     }
 
     //#region WEB3 ACCOUNT FUNCTIONS
@@ -44,6 +44,13 @@ export class Web3Service{
         return new Promise((resolve, reject) => {
             var account = this.web3Connection.eth.accounts.create();
             resolve(account);
+        });
+    }
+
+    public encryptAccount(pk: string, password: string){
+        return new Promise((resolve, reject) => {
+            var encrypted = this.web3Connection.eth.accounts.encrypt(pk, password);
+            resolve(encrypted);
         });
     }
     //#endregion
