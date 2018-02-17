@@ -2,19 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
-#Intro
-Welcome! 
-Thanks for checkin us out and we hope you enjoyed our code fair project.
+#IMPORTANT: This project is purely experimental and should not be considered a valid, legitimate, or secure interface for any interaction with the Ethereum network. 
 
-Here we will be showing a run-down of the technologies used and their importance to this project!
+#Intro
+Welcome! This project was developed for CDU Code Fair 2017. Thanks for checking us out.
 
 #Purpose
 
-During this year our team have gained an increased interest in the blockchain space and wanted get a better understanding about how this new technology works and what can be made using it.
+Over the course of the year our team became increasingly interested in the blockchain space and wanted to gain a better understanding of how these new technologies work, and what can be accomplished.
 
-Resaerch has been done by the team that reviewed the usability of current blockchain wallets and found an increased complexity for the users, one way we were trying to tackle this is by incorperating ENS (Etheum Name System) into this webwallet to reduce the exposure of wallet private keys when wanting to check wallet balances.  
+As well as increasing awareness of security in the Blockchain space, the team have been eager to explore the development space on this new platform, which this let us explore. 
 
-As well as increasing awareness of security in the Blockchain space, the team have been eager in developing technology on this new platform, which this project allows us to try out. 
+Prior research had been carried out by the team that reviewed the usability of current blockchain wallets and found an increased complexity for the users. 
+Initially the aim of this project was to develop a basic Ethereum web-wallet as part of a statically hosted web page, the idea being that users could save the page and run it locally without the need to access a hosting server for the interface. We believed this implementation could possibly provide a user-friendly, secure means of accessing aspects of the Ethereum network. 
+During development we encountered several issues with this proposed structure, and overall found we were limited in the functionality that web3js could provide us without a NODE JS back-end. 
 
 ##Eth wallets - Public and Private keys
 
@@ -63,12 +64,11 @@ Providers determine how the web applciation will connect to the blockchain, a pr
 
 The service privider used in this web app is a hosted Geth node (Infura), but it will default to the users chosen provider if they are already running a web3 enabled browser. 
 
-
 --node.js, npm
 Npm (Node Package Manager) was used throughout this project to ensure packages, and their dependancies were managed correctly.
 
 --Angular 2
-Angular 2 was chosen as the front end development framework due to it's increased used in asynchronous function calls and increased use in Promises.
+Angular 2 was chosen as the front end development framework due developer familiarity with Angular 1.x, and an interest in the updated framework offered.
 
 --API's
 Two external API's were used, the first being coinmarketcap, to gather the token price for the tickers on the home page; https://coinmarketcap.com/api
@@ -85,8 +85,6 @@ Ethereum; https://www.ethereum.org/
 web3; https://github.com/ethereum/web3.js/
 geth; https://geth.ethereum.org/
 ens; http://ens.domains/
-
-
 
 
 ## Setup
