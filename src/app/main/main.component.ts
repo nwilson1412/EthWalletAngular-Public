@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class MainComponent {
 
     constructor(){
+        //allows calls in browser console
+        window["homeConsole"] = this;
 
     }
 
