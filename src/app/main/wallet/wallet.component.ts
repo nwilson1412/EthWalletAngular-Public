@@ -18,10 +18,9 @@ export class WalletComponent {
     generatedAccount: EthAccountModel; 
     importedPrivateKey: string;
     userBalance: number;
+    userNTKBalance: number;
     userTXcount: number;
     error: string;
-    //ntkABI: any;
-    
 
     constructor(
         private web3serv: Web3Service,
@@ -60,37 +59,33 @@ export class WalletComponent {
     importPrivateKey() {
         try{
             this.web3serv.pkToAccount(this.importedPrivateKey).then((response: EthAccountModel) => {
-                console.log("Step 1", response)
-                this.generatedAccount = response;
-                this.getBalance();
-                console.log(this.web3serv.NTKAddress);
-                
-
+                this.generatedAccount = response; 
             });
         }catch(err){
             console.log(err);
         }
+        this.getBalance();
         this.importedPrivateKey = null;
     }
 
     getBalance(){
         this.web3serv.getBalance(this.generatedAccount.address).then((response) => {
             this.userBalance = response / 1000000000000000000;
-            console.log("Step 2.", this.userBalance)
-        }).catch((error) => {
-            console.log(error);
-            this.error = error;
-        })
+            console.log("Step 1. user balance", this.userBalance)
+        });
         this.web3serv.getTxAmount(this.generatedAccount.address).then((response) => {
             this.userTXcount = response;
+            console.log("Step 2. User Tx Count (Nounce)")
         })
-        //this.userTXcount = this.web3serv.getTxAmount(this.generateAccount.address)
-        //this.web3serv.NTKContractABI().then((response) => {
-       //     console.log(response, "NTKABI");
-      //  })
-        var ntkABIContract = this.web3serv.ntkABIContract();
-       ///console.log(this.web3serv.NTKContractABI, "NTKABI");
-        console.log(this.userTXcount, "User transaction Nounce", "\n", this.web3serv.ntkABIContract);
+
+        //get NTK Balance
+        this.web3serv.ntkInitialization(this.generatedAccount.address).then((response) => {
+            console.log(this.web3serv.NTKBalanceAmount, "NTK BALANCE TEST!")
+        });
+        
+     
+        
+        console.log(this.userTXcount, "User transaction Nounce", "\n", this.userTXcount);
     };
 
 

@@ -50,6 +50,7 @@ export class BalanceComponent implements OnInit {
 
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
+    /*
     loadAddressData(){
         this.error = null;
         this.userTransactionData = [];
@@ -58,6 +59,7 @@ export class BalanceComponent implements OnInit {
         this.userTransactionCount = null;
         try{
             //looks for 'h' because it's the last charactor of an ENS name
+            
             if(this.addressInput.slice(-1) == 'h'){
                 this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
                 { 
@@ -80,6 +82,7 @@ export class BalanceComponent implements OnInit {
         }
         
     }
+    */
 
     /* Balance call, grabs account balance from ethereum node */
     getBalance(userAddr){

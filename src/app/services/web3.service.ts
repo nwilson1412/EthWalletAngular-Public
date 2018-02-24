@@ -19,6 +19,7 @@ export class Web3Service{
     NTKAddress: string;
     NTKAddressShort: string;
     txCount: number;
+    NTKBalanceAmount: number;
     //ntkABIContract: any;
     //ntkABI: any;
     
@@ -54,7 +55,7 @@ export class Web3Service{
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
 
         }
-        this.NTKABIContractadd = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress);
+        //this.NTKABIContractadd = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress);
         const provider = (this.web3Connection.currentProvider);
 
         //ENS wont work in testnet
@@ -62,6 +63,28 @@ export class Web3Service{
     }
 
     //#region WEB3 ACCOUNT FUNCTIONS
+
+    public ntkInitialization(fromAddress: string){
+        return new Promise((resolve, error) => {
+            var tokenContract = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress, {from: fromAddress});
+            this.ntkBalance(tokenContract, fromAddress);
+
+        })
+
+
+    }
+
+    private ntkBalance(tokenContract: any, fromAddress: string) {
+        return new Promise((resolve, error) => {
+            tokenContract.methods.balanceOf(fromAddress).call().then((response) => {
+                this.NTKBalanceAmount = response
+                
+               // this.NTKBalanceAmount = resolve(balance);
+                console.log("Balance of NTK:", this.NTKBalanceAmount);
+
+            })
+        });
+    }
 
     public createAccount(){
         return new Promise((resolve, reject) => {
@@ -115,7 +138,7 @@ export class Web3Service{
         return this.web3Connection.eth.getTransactionCount(amount);
     }
 
-    
+    /*
     public ntkABIContract(){
         console.log("Error???")
         var x = new this.web3Connection.eth.Contract(ntkABI);
@@ -124,7 +147,7 @@ export class Web3Service{
        // return this.ntkABIContract
      //   return ntkABIContract
     }
-
+*/
     // This was in the API but apparently doesn't work? 
     // getTransactions(address: string){
     //     return this.web3.eth.getTransaction(address);
