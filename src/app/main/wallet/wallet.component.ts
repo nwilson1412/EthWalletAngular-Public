@@ -21,7 +21,8 @@ export class WalletComponent {
         private web3serv: Web3Service,
         private modalService: NgbModal
     ){
-
+        //allows calls in browser console
+        window["homeConsole"] = this;
     }
 
     generateAccount(){
