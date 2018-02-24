@@ -6,18 +6,37 @@ import Web3 from 'web3';
 import ENS from 'ethjs-ens';
 //import HttpProvider from 'ethjs-provider-http';
 
+import ntkABI from '../components/contracts/ntk.json';
+
 @Injectable()
 export class Web3Service{
 
     public web3Connection = null; 
-    ensConnection = null;
-    ens: any;
-    address: string;
-
+    public NTKABIContractadd = null;
+    //ensConnection = null;
+   // ens: any;
+   // address: string;
+    NTKAddress: string;
+    NTKAddressShort: string;
+    txCount: number;
+    //ntkABIContract: any;
+    //ntkABI: any;
+    
 
 
     constructor(){
+        this.NTKAddress = ('0xc484a17197dda87826a3987cbce90d845f21cae4');
+        this.NTKAddressShort = (this.NTKAddress).substring(2);
+        
         this.setup();
+
+        //Hex'ed contract address
+        
+        //0x removed from contract address
+       
+
+        
+
     } 
 
 
@@ -35,10 +54,11 @@ export class Web3Service{
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
 
         }
+        this.NTKABIContractadd = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress);
         const provider = (this.web3Connection.currentProvider);
 
         //ENS wont work in testnet
-        this.ens = new ENS({ provider, network: '1' });
+       // this.ens = new ENS({ provider, network: '1' });
     }
 
     //#region WEB3 ACCOUNT FUNCTIONS
@@ -63,9 +83,11 @@ export class Web3Service{
             resolve(encrypted);
         });
     }
-    //#endregion
 
-    //#region ENS LOOKUP FUNCTIONS
+
+    //#endregion
+/*
+    //#region ENS LOOKUP FUNCTIONS 
     public domainToHexLookup(userInputEns: string){
         //used to look up ENS addresses on the Ethereum Blockchain
         return this.ens.lookup(userInputEns);
@@ -76,6 +98,7 @@ export class Web3Service{
         return this.ens.reverse(userInputHex);
     }
     //#endregion
+    */
 
     //#region Web3 Calls
     //used to ensure web3 is connecting to web3 provider
@@ -85,6 +108,21 @@ export class Web3Service{
 
     public getBalance(address: string){
         return this.web3Connection.eth.getBalance(address);
+    }
+
+    public getTxAmount(amount: string){
+        console.log("step 1. address:", amount)
+        return this.web3Connection.eth.getTransactionCount(amount);
+    }
+
+    
+    public ntkABIContract(){
+        console.log("Error???")
+        var x = new this.web3Connection.eth.Contract(ntkABI);
+        console.log(x, "WFWFF");
+       // console.log("NTKContract initiated..")
+       // return this.ntkABIContract
+     //   return ntkABIContract
     }
 
     // This was in the API but apparently doesn't work? 

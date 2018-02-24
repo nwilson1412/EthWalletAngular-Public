@@ -6,6 +6,7 @@ import {PkRevealModal} from '../../components/modals/pkRevealModal.component';
 
 // Services
 import { Web3Service } from '../../services/web3.service';
+//import {ntkABI} from '../../components/contracts/ntk';
 
 @Component({
     selector: 'wallet-view',
@@ -17,7 +18,9 @@ export class WalletComponent {
     generatedAccount: EthAccountModel; 
     importedPrivateKey: string;
     userBalance: number;
+    userTXcount: number;
     error: string;
+    //ntkABI: any;
     
 
     constructor(
@@ -26,6 +29,7 @@ export class WalletComponent {
     ){
         //allows calls in browser console
         window["homeConsole"] = this;
+
     }
 
     generateAccount(){
@@ -59,6 +63,7 @@ export class WalletComponent {
                 console.log("Step 1", response)
                 this.generatedAccount = response;
                 this.getBalance();
+                console.log(this.web3serv.NTKAddress);
                 
 
             });
@@ -76,7 +81,19 @@ export class WalletComponent {
             console.log(error);
             this.error = error;
         })
+        this.web3serv.getTxAmount(this.generatedAccount.address).then((response) => {
+            this.userTXcount = response;
+        })
+        //this.userTXcount = this.web3serv.getTxAmount(this.generateAccount.address)
+        //this.web3serv.NTKContractABI().then((response) => {
+       //     console.log(response, "NTKABI");
+      //  })
+        var ntkABIContract = this.web3serv.ntkABIContract();
+       ///console.log(this.web3serv.NTKContractABI, "NTKABI");
+        console.log(this.userTXcount, "User transaction Nounce", "\n", this.web3serv.ntkABIContract);
     };
+
+
 }
 
 
