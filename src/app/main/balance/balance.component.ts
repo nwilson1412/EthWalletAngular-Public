@@ -57,6 +57,7 @@ export class BalanceComponent implements OnInit {
         this.userAddress = null;
         this.userTransactionCount = null;
         try{
+            //looks for 'h' because it's the last charactor of an ENS name
             if(this.addressInput.slice(-1) == 'h'){
                 this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
                 { 
@@ -80,7 +81,7 @@ export class BalanceComponent implements OnInit {
         
     }
 
-    /* Balance call, grabs account balance from etherum node */
+    /* Balance call, grabs account balance from ethereum node */
     getBalance(userAddr){
         this.web3serv.getBalance(userAddr).then((response) => {
             this.userBalance = response / 1000000000000000000;
