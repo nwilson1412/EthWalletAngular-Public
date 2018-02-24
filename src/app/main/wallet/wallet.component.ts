@@ -16,6 +16,9 @@ export class WalletComponent {
 
     generatedAccount: EthAccountModel; 
     importedPrivateKey: string;
+    userBalance: number;
+    error: string;
+    
 
     constructor(
         private web3serv: Web3Service,
@@ -53,13 +56,27 @@ export class WalletComponent {
     importPrivateKey() {
         try{
             this.web3serv.pkToAccount(this.importedPrivateKey).then((response: EthAccountModel) => {
+                console.log("Step 1", response)
                 this.generatedAccount = response;
+                this.getBalance();
+                
+
             });
         }catch(err){
             console.log(err);
         }
         this.importedPrivateKey = null;
     }
+
+    getBalance(){
+        this.web3serv.getBalance(this.generatedAccount.address).then((response) => {
+            this.userBalance = response / 1000000000000000000;
+            console.log("Step 2.", this.userBalance)
+        }).catch((error) => {
+            console.log(error);
+            this.error = error;
+        })
+    };
 }
 
 
