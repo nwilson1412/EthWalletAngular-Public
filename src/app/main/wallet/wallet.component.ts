@@ -6,7 +6,6 @@ import {PkRevealModal} from '../../components/modals/pkRevealModal.component';
 
 // Services
 import { Web3Service } from '../../services/web3.service';
-//import {ntkABI} from '../../components/contracts/ntk';
 
 @Component({
     selector: 'wallet-view',
@@ -18,9 +17,10 @@ export class WalletComponent {
     generatedAccount: EthAccountModel; 
     importedPrivateKey: string;
     userBalance: number;
-    userNTKBalance: number;
+    userNTKBalance: any;
     userTXcount: number;
     error: string;
+    ntkBalContract: any;
 
     constructor(
         private web3serv: Web3Service,
@@ -33,6 +33,8 @@ export class WalletComponent {
 
     generateAccount(){
         this.web3serv.createAccount().then((response: EthAccountModel) => {
+            this.userNTKBalance = null;
+            this.userBalance = null;
             this.generatedAccount = response;
             console.log(response);
         });
@@ -49,47 +51,35 @@ export class WalletComponent {
         textFile = window.URL.createObjectURL(data);
         var a = document.getElementById('hiddenLink');
         window.open(textFile);
-        
-    // Can't run without Node Crypt 
-    //    this.web3serv.encryptAccount(this.generatedAccount.privateKey, 'test').then((response: EncryptedEthAccountModel) => {
-    //         console.log(response);
-    //     });
     }
 
     importPrivateKey() {
-        try{
-            this.web3serv.pkToAccount(this.importedPrivateKey).then((response: EthAccountModel) => {
-                this.generatedAccount = response; 
-            });
-        }catch(err){
-            console.log(err);
-        }
-        this.getBalance();
+        this.web3serv.pkToAccount(this.importedPrivateKey).then((response: EthAccountModel) => {
+            this.generatedAccount = response; 
+            //this.getBalance();
+        });
         this.importedPrivateKey = null;
     }
 
     getBalance(){
         this.web3serv.getBalance(this.generatedAccount.address).then((response) => {
             this.userBalance = response / 1000000000000000000;
-            console.log("Step 1. user balance", this.userBalance)
+            console.log("(web.component)User balance", this.userBalance)
         });
         this.web3serv.getTxAmount(this.generatedAccount.address).then((response) => {
             this.userTXcount = response;
-            console.log("Step 2. User Tx Count (Nounce)")
+            console.log("(wallet.component)User Tx Count (Nounce)", this.userTXcount);
         })
 
-        //get NTK Balance
-        this.web3serv.ntkInitialization(this.generatedAccount.address).then((response) => {
-            console.log(this.web3serv.NTKBalanceAmount, "NTK BALANCE TEST!")
-        });
-        
-     
-        
-        console.log(this.userTXcount, "User transaction Nounce", "\n", this.userTXcount);
+        this.ntkBalContract = this.web3serv.ntkInitialization(this.generatedAccount.address)
+        this.ntkBalContract.methods.balanceOf(this.generatedAccount.address).call().then((response) => {
+            this.userNTKBalance = response;
+            console.log("(wallet.conponent)Balance of NTK:", this.userNTKBalance);
+        });       
     };
+    }
 
 
-}
 
 
 //#region models
