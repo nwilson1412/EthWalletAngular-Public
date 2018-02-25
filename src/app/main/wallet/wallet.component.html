@@ -32,16 +32,22 @@
                 </form>
             </div>
             <div class="col-sm-6">
+                <!--<button class="btn btn-info btn-block" type="button" (click)="getBalance()" [disabled]="!getBalance" *ngif="!generatedAccount">Get Account Balance</button>-->
                 <div class="form" *ngIf="generatedAccount">
+
                     <div class="form-group">
-                        <label>Address</label>
-                        <p>{{generatedAccount.address}}</p>
-                        <label>Balance</label>
-                        <p>{{userBalance}}</p>
+                        <label>Address: {{generatedAccount.address}}</label>
                     </div>
                     <div class="form-group">
                         <label>Private Key</label>
                         <p style="text-decoration: underline; cursor: pointer;" (click)="revealPrivateKey()">Click to reveal private key</p>
+                    </div>
+                    <button class="btn btn-info btn-block" type="button" (click)="getBalance()" [disabled]="!getBalance">Get Account Balance</button>
+                    
+                    <div class="form-group" *ngIf="userBalance || userNTKBalance">
+                            <label>Balance</label>
+                            <p>{{userBalance}} Eth </p>
+                            <p>{{userNTKBalance}} NTK</p>
                     </div>
                 </div>
             </div>
