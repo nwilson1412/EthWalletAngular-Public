@@ -14,14 +14,11 @@ export class Web3Service{
     public web3Connection = null; 
     public NTKABIContractadd = null;
     //ensConnection = null;
-   // ens: any;
-   // address: string;
+    ens: any;
     NTKAddress: string;
     NTKAddressShort: string;
     txCount: number;
     NTKBalanceAmount: number;
-    //ntkABIContract: any;
-    //ntkABI: any;
     
 
 
@@ -30,14 +27,6 @@ export class Web3Service{
         this.NTKAddressShort = (this.NTKAddress).substring(2);
         
         this.setup();
-
-        //Hex'ed contract address
-        
-        //0x removed from contract address
-       
-
-        
-
     } 
 
 
@@ -55,36 +44,29 @@ export class Web3Service{
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
 
         }
-        //this.NTKABIContractadd = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress);
         const provider = (this.web3Connection.currentProvider);
 
         //ENS wont work in testnet
        // this.ens = new ENS({ provider, network: '1' });
     }
-
-    //#region WEB3 ACCOUNT FUNCTIONS
-
+    //#region Token Functions
     public ntkInitialization(fromAddress: string){
+        var tokenContract = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress, {from: fromAddress});
+        return tokenContract
+    } 
+
+    private tokenBalance(tokenContract: any, fromAddress: string) {
         return new Promise((resolve, error) => {
-            var tokenContract = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress, {from: fromAddress});
-            this.ntkBalance(tokenContract, fromAddress);
-
-        })
-
-
-    }
-
-    private ntkBalance(tokenContract: any, fromAddress: string) {
-        return new Promise((resolve, error) => {
-            tokenContract.methods.balanceOf(fromAddress).call().then((response) => {
+            tokenContract.methods.balanceOf(fromAddress).then((response) => {
                 this.NTKBalanceAmount = response
-                
-               // this.NTKBalanceAmount = resolve(balance);
-                console.log("Balance of NTK:", this.NTKBalanceAmount);
-
+                console.log("Balance of Token of:",tokenContract , this.NTKBalanceAmount);
             })
         });
     }
+    //#endregion
+
+    //#region WEB3 ACCOUNT FUNCTIONS
+
 
     public createAccount(){
         return new Promise((resolve, reject) => {
@@ -109,7 +91,7 @@ export class Web3Service{
 
 
     //#endregion
-/*
+
     //#region ENS LOOKUP FUNCTIONS 
     public domainToHexLookup(userInputEns: string){
         //used to look up ENS addresses on the Ethereum Blockchain
@@ -121,7 +103,7 @@ export class Web3Service{
         return this.ens.reverse(userInputHex);
     }
     //#endregion
-    */
+
 
     //#region Web3 Calls
     //used to ensure web3 is connecting to web3 provider
@@ -137,21 +119,6 @@ export class Web3Service{
         console.log("step 1. address:", amount)
         return this.web3Connection.eth.getTransactionCount(amount);
     }
-
-    /*
-    public ntkABIContract(){
-        console.log("Error???")
-        var x = new this.web3Connection.eth.Contract(ntkABI);
-        console.log(x, "WFWFF");
-       // console.log("NTKContract initiated..")
-       // return this.ntkABIContract
-     //   return ntkABIContract
-    }
-*/
-    // This was in the API but apparently doesn't work? 
-    // getTransactions(address: string){
-    //     return this.web3.eth.getTransaction(address);
-    // }
 
     public getCurrentBlockNumber(){
         return this.web3Connection.eth.getBlockNumber();
