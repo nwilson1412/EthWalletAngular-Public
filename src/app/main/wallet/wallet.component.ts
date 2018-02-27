@@ -33,11 +33,16 @@ export class WalletComponent {
 
     generateAccount(){
         this.web3serv.createAccount().then((response: EthAccountModel) => {
-            this.userNTKBalance = null;
-            this.userBalance = null;
             this.generatedAccount = response;
             console.log(response);
         });
+    }
+
+    clearAccount(){
+        this.userNTKBalance = null;
+        this.userBalance = null;
+        this.generatedAccount = null;
+        
     }
 
     revealPrivateKey(){
