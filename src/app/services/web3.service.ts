@@ -12,7 +12,6 @@ import ntkABI from '../components/contracts/ntk.json';
 export class Web3Service{
 
     public web3Connection = null; 
-    public NTKABIContractadd = null;
     //ensConnection = null;
     ens: any;
     NTKAddress: string;
@@ -31,19 +30,20 @@ export class Web3Service{
 
 
     /* Setup Functions */
+    /***** Force connect to ropsten using infura node as web3 provider   ********/
     setup(){
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if(typeof (<any>window).web3 !== 'undefined'){
+       /* if(typeof (<any>window).web3 !== 'undefined'){
             // Use Mist/MetaMask's provider
             this.web3Connection = new Web3((<any>window).web3.currentProvider);
 
         }else{
-            Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+           */ Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
            
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
             this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
-
-        }
+            /*
+        } */
         const provider = (this.web3Connection.currentProvider);
 
         //ENS wont work in testnet
