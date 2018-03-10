@@ -9,7 +9,7 @@
                         <button class="btn btn-default btn-block" (click)="generateAccount()">Generate</button>      
                     </div>
                     <div class="col-sm-6" *ngIf="generatedAccount">
-                        <button class="btn btn-info btn-block" (click)="encryptPrivateKey()">Export</button>               
+                        <a class="btn btn-info btn-block" title="Dowload JSON" [href]="downloadJsonHref" download="download.json">Export</a> 
                     </div>
                 </div>
             </div>
@@ -53,6 +53,20 @@
             </div>
         </div>
         <hr/>
+        
+        <div class="row" >
+            <div class="col-sm-6" *ngIf="!generatedAccount">
+                <form class="form" class="center-text">
+                    <div class="form-group">
+                        <label>Generate Account and Encrypt</label>
+                        <input name="encryptPwInput" type="text" class="form-control" [(ngModel)]="encryptPw"/>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info btn-block" type="button" (click)="generateAndEncrypt()" [disabled]="!encryptPw">Generate</button>                            
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row" *ngIf="generatedAccount">
             <div class="col-sm-6">
                 <button class="btn btn-danger btn-block" (click)="clearAccount()">Clear Account</button>
