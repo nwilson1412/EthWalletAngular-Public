@@ -89,6 +89,13 @@ export class Web3Service{
         });
     }
 
+    public decryptAccount(pk: string, password: string){
+        return new Promise((resolve, reject) => {
+            var decrypted = this.web3Connection.eth.accounts.decrypt();
+            resolve(decrypted);
+        }); 
+    }
+
 
     //#endregion
 
