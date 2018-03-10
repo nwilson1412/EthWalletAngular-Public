@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // Components
 import {PkRevealModal} from '../../components/modals/pkRevealModal.component';
@@ -16,15 +17,19 @@ export class WalletComponent {
 
     generatedAccount: EthAccountModel; 
     importedPrivateKey: string;
+    encryptPw: string; 
     userBalance: number;
     userNTKBalance: any;
     userTXcount: number;
     error: string;
     ntkBalContract: any;
 
+    downloadJsonHref: any;
+
     constructor(
         private web3serv: Web3Service,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private sanitizer: DomSanitizer
     ){
         //allows calls in browser console
         window["homeConsole"] = this;
@@ -34,8 +39,20 @@ export class WalletComponent {
     generateAccount(){
         this.web3serv.createAccount().then((response: EthAccountModel) => {
             this.generatedAccount = response;
-            console.log(response);
+           // this.generatedAccount = this.generatedAccount.encrypt("Test");
+            
+            this.encryptPk();
+            this.encryptPw = null;
+            //console.log(this.generatedAccount,this.generatedAccount.address);
+            
         });
+    }
+
+    generateAndEncrypt(){
+        this.generateAccount();
+      //  this.generatedAccount.encrypt(this.encryptPw);
+     //   this.encryptPw = null;
+        
     }
 
     clearAccount(){
@@ -51,17 +68,33 @@ export class WalletComponent {
     }
 
     encryptPrivateKey(){
-        var textFile = null;
-        var data = new Blob([this.generatedAccount.privateKey], {type: 'text/plain'});
-        textFile = window.URL.createObjectURL(data);
-        var a = document.getElementById('hiddenLink');
-        window.open(textFile);
+        var x = this.generatedAccount.encrypt("test");
+        x = JSON.stringify(x)
+        console.log(x)
+        var uri:SafeUrl = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(x));
+        this.downloadJsonHref = uri;
+    }
+
+    encryptPk()
+    {
+        //console.log(this.web3serv.encryptAccount(this.generatedAccount.privateKey, "test"));
+        this.web3serv.encryptAccount(this.generatedAccount.privateKey, "test").then((response) => {
+            var encryptedPK = response
+            this.encryptPrivateKey();
+            console.log(encryptedPK);
+        });
+    }
+
+    decryptPk(){
+        this.web3serv.decryptAccount(this.generatedAccount.privateKey, "test").then((response) => {
+            console.log(response);
+        });
+
     }
 
     importPrivateKey() {
         this.web3serv.pkToAccount(this.importedPrivateKey).then((response: EthAccountModel) => {
             this.generatedAccount = response; 
-            //this.getBalance();
         });
         this.importedPrivateKey = null;
     }
