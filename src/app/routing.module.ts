@@ -9,7 +9,7 @@ import { WalletComponent } from './main/wallet/wallet.component';
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home',  component: HomeComponent },
-   // { path: 'balance',  component: BalanceComponent },
+    { path: 'balance',  component: BalanceComponent },
     { path: 'wallet', component: WalletComponent },
 ];
  
