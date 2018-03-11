@@ -6,40 +6,67 @@ import Web3 from 'web3';
 import ENS from 'ethjs-ens';
 //import HttpProvider from 'ethjs-provider-http';
 
+import ntkABI from '../components/contracts/ntk.json';
+
 @Injectable()
 export class Web3Service{
 
     public web3Connection = null; 
-    ensConnection = null;
+    //ensConnection = null;
     ens: any;
-    address: string;
-
+    NTKAddress: string;
+    NTKAddressShort: string;
+    txCount: number;
+    NTKBalanceAmount: number;
+    
 
 
     constructor(){
+        this.NTKAddress = ('0xc484a17197dda87826a3987cbce90d845f21cae4');
+        this.NTKAddressShort = (this.NTKAddress).substring(2);
+        
         this.setup();
     } 
 
 
     /* Setup Functions */
+    /***** Force connect to ropsten using infura node as web3 provider   ********/
     setup(){
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if(typeof (<any>window).web3 !== 'undefined'){
+       /* if(typeof (<any>window).web3 !== 'undefined'){
             // Use Mist/MetaMask's provider
             this.web3Connection = new Web3((<any>window).web3.currentProvider);
 
         }else{
-            Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+           */ Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
            
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/cyNgApVB0JFY4LaZomim'))
-
-        }
+            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
+            /*
+        } */
         const provider = (this.web3Connection.currentProvider);
-        this.ens = new ENS({ provider, network: '1' });
+
+        //ENS wont work in testnet
+       // this.ens = new ENS({ provider, network: '1' });
     }
+    //#region Token Functions
+    public ntkInitialization(fromAddress: string){
+        var tokenContract = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress, {from: fromAddress});
+        return tokenContract
+    } 
+
+    private tokenBalance(tokenContract: any, fromAddress: string) {
+        return new Promise((resolve, error) => {
+            tokenContract.methods.balanceOf(fromAddress).then((response) => {
+                this.NTKBalanceAmount = response
+                console.log("Balance of Token of:",tokenContract , this.NTKBalanceAmount);
+            })
+        });
+    }
+    //#endregion
 
     //#region WEB3 ACCOUNT FUNCTIONS
+
 
     public createAccount(){
         return new Promise((resolve, reject) => {
@@ -61,9 +88,18 @@ export class Web3Service{
             resolve(encrypted);
         });
     }
+
+    public decryptAccount(pk: string, password: string){
+        return new Promise((resolve, reject) => {
+            var decrypted = this.web3Connection.eth.accounts.decrypt();
+            resolve(decrypted);
+        }); 
+    }
+
+
     //#endregion
 
-    //#region ENS LOOKUP FUNCTIONS
+    //#region ENS LOOKUP FUNCTIONS 
     public domainToHexLookup(userInputEns: string){
         //used to look up ENS addresses on the Ethereum Blockchain
         return this.ens.lookup(userInputEns);
@@ -75,6 +111,7 @@ export class Web3Service{
     }
     //#endregion
 
+
     //#region Web3 Calls
     //used to ensure web3 is connecting to web3 provider
     public getStatus(){
@@ -85,10 +122,10 @@ export class Web3Service{
         return this.web3Connection.eth.getBalance(address);
     }
 
-    // This was in the API but apparently doesn't work? 
-    // getTransactions(address: string){
-    //     return this.web3.eth.getTransaction(address);
-    // }
+    public getTxAmount(amount: string){
+        console.log("step 1. address:", amount)
+        return this.web3Connection.eth.getTransactionCount(amount);
+    }
 
     public getCurrentBlockNumber(){
         return this.web3Connection.eth.getBlockNumber();

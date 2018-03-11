@@ -50,6 +50,7 @@ export class BalanceComponent implements OnInit {
 
     /* Component calls (from the HTML view) */
     /**** domainToHexAddress is a Promice, requiring the getBalance call withinthe .then to work correctly  ****/
+    
     loadAddressData(){
         this.error = null;
         this.userTransactionData = [];
@@ -57,6 +58,8 @@ export class BalanceComponent implements OnInit {
         this.userAddress = null;
         this.userTransactionCount = null;
         try{
+            //looks for 'h' because it's the last charactor of an ENS name
+            
             if(this.addressInput.slice(-1) == 'h'){
                 this.web3serv.domainToHexLookup(this.addressInput).then((hexAddr) =>
                 { 
@@ -78,9 +81,11 @@ export class BalanceComponent implements OnInit {
             this.error = error;
         }
         
+        
     }
+    
 
-    /* Balance call, grabs account balance from etherum node */
+    /* Balance call, grabs account balance from ethereum node */
     getBalance(userAddr){
         this.web3serv.getBalance(userAddr).then((response) => {
             this.userBalance = response / 1000000000000000000;
@@ -104,7 +109,9 @@ export class BalanceComponent implements OnInit {
 
     /* Test Etherscan API */
     getAddressTransactions(userAddress: string){
-            return this.http.get('https://api.etherscan.io/api?module=account&action=txlist&address='
+            //using etherscan ropsten API
+            //return this.http.get('https://api.etherscan.io/api?module=account&action=txlist&address='
+            return this.http.get('https://api-ropsten.etherscan.io/api?module=account&action=txlist&address='
             + userAddress + '&startblock=0&endblock='+this.web3serv.getCurrentBlock+'&sort=desc&apikey=5R3BDH5G62J7PCWIIU7UHT2E4EDS1Z41G5').toPromise();
     }
 }

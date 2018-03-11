@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-//import web3p from 'web3';
-
-
-
-//var Web3EthAccounts = require('web3-eth-accounts');
-//import Web3EthAccounts from '../../components/web3'
 
 @Component({
     selector: 'home-view',
