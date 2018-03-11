@@ -41,7 +41,7 @@ export class Web3Service{
             Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
            
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
+            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://infura.io/cyNgApVB0JFY4LaZomim'))
             
         } 
         const provider = (this.web3Connection.currentProvider);
