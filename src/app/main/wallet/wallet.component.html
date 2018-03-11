@@ -18,9 +18,6 @@
         <hr/>
         <div class="row">
             <div class="col-sm-6" *ngIf="!generatedAccount">
-                <!-- <div class="form">
-                    <input type="file" class="form-control-file" [(ngModel)]="file" (change)="import(file)" placeholder="Import a wallet private key..." accept="text/plain" />
-                </div> -->
                 <form class="form" class="center-text">
                     <div class="form-group">
                         <label>Generate Account from Private Key</label>
@@ -32,7 +29,6 @@
                 </form>
             </div>
             <div class="col-sm-6">
-                <!--<button class="btn btn-info btn-block" type="button" (click)="getBalance()" [disabled]="!getBalance" *ngif="!generatedAccount">Get Account Balance</button>-->
                 <div class="form" *ngIf="generatedAccount">
 
                     <div class="form-group">
@@ -47,7 +43,7 @@
                     <div class="form-group" *ngIf="userBalance || userNTKBalance">
                             <label>Balance</label>
                             <p>{{userBalance}} Eth </p>
-                            <p>{{userNTKBalance}} NTK</p>
+                          <!--  <p>{{userNTKBalance}} NTK</p>-->
                     </div>
                 </div>
             </div>
