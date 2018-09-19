@@ -32,7 +32,7 @@ export class WalletComponent {
         private sanitizer: DomSanitizer
     ){
         //allows calls in browser console
-        window["homeConsole"] = this;
+        //window["homeConsole"] = this;
 
     }
 
@@ -109,11 +109,11 @@ export class WalletComponent {
             console.log("(wallet.component)User Tx Count (Nounce)", this.userTXcount);
         })
 
-        this.ntkBalContract = this.web3serv.ntkInitialization(this.generatedAccount.address)
-        this.ntkBalContract.methods.balanceOf(this.generatedAccount.address).call().then((response) => {
-            this.userNTKBalance = response;
-            console.log("(wallet.conponent)Balance of NTK:", this.userNTKBalance);
-        });       
+      //  this.ntkBalContract = this.web3serv.ntkInitialization(this.generatedAccount.address)
+       // this.ntkBalContract.methods.balanceOf(this.generatedAccount.address).call().then((response) => {
+       //     this.userNTKBalance = response;
+       //     console.log("(wallet.conponent)Balance of NTK:", this.userNTKBalance);
+       // });       
     };
     }
 

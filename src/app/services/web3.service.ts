@@ -6,13 +6,13 @@ import Web3 from 'web3';
 import ENS from 'ethjs-ens';
 //import HttpProvider from 'ethjs-provider-http';
 
-import ntkABI from '../components/contracts/ntk.json';
+//import ntkABI from '../components/contracts/ntk.json';
 
 @Injectable()
 export class Web3Service{
 
     public web3Connection = null; 
-    //ensConnection = null;
+    ensConnection = null;
     ens: any;
     NTKAddress: string;
     NTKAddressShort: string;
@@ -22,8 +22,8 @@ export class Web3Service{
 
 
     constructor(){
-        this.NTKAddress = ('0xc484a17197dda87826a3987cbce90d845f21cae4');
-        this.NTKAddressShort = (this.NTKAddress).substring(2);
+        //this.NTKAddress = ('0xc484a17197dda87826a3987cbce90d845f21cae4');
+       // this.NTKAddressShort = (this.NTKAddress).substring(2);
         
         this.setup();
     } 
@@ -33,36 +33,38 @@ export class Web3Service{
     /***** Force connect to ropsten using infura node as web3 provider   ********/
     setup(){
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-       /* if(typeof (<any>window).web3 !== 'undefined'){
+        if(typeof (<any>window).web3 !== 'undefined'){
             // Use Mist/MetaMask's provider
             this.web3Connection = new Web3((<any>window).web3.currentProvider);
 
         }else{
-           */ Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+            Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
            
             // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/cyNgApVB0JFY4LaZomim'))
-            /*
-        } */
+            this.web3Connection = new Web3(new Web3.providers.HttpProvider('https://infura.io/cyNgApVB0JFY4LaZomim'))
+            
+        } 
         const provider = (this.web3Connection.currentProvider);
 
         //ENS wont work in testnet
-       // this.ens = new ENS({ provider, network: '1' });
+        this.ens = new ENS({ provider, network: '1' });
     }
     //#region Token Functions
-    public ntkInitialization(fromAddress: string){
+   /* public ntkInitialization(fromAddress: string){
         var tokenContract = new this.web3Connection.eth.Contract(ntkABI, this.NTKAddress, {from: fromAddress});
         return tokenContract
-    } 
+    } */
 
-    private tokenBalance(tokenContract: any, fromAddress: string) {
+
+    //**** IMPORTANT, This can be used for any token, currently set up for NTK, but parse in tokencontract with its ABI and it will get that token balance  ******/
+  /*  private tokenBalance(tokenContract: any, fromAddress: string) {
         return new Promise((resolve, error) => {
             tokenContract.methods.balanceOf(fromAddress).then((response) => {
                 this.NTKBalanceAmount = response
                 console.log("Balance of Token of:",tokenContract , this.NTKBalanceAmount);
             })
         });
-    }
+    }*/
     //#endregion
 
     //#region WEB3 ACCOUNT FUNCTIONS
